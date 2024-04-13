@@ -18,7 +18,7 @@
                     <div class="input-area relative">
                         <label for="total" class="form-label">Price</label>
                         <input type="text" id="total" name="total" class="form-control" placeholder="Total Price"
-                            value="Rp. {{ number_format($order->total_price) }}" readonly>
+                            value="Rp. {{ number_format($order->price) }}" readonly>
                         <x-input-error :messages="$errors->get('total')" class="mt-2" />
                     </div>
 
@@ -32,7 +32,7 @@
                     <div class="input-area relative">
                         <label for="total_price" class="form-label">Total Price</label>
                         <input type="text" id="total_price" name="total" class="form-control" placeholder="Total Price"
-                            value="Rp. {{ number_format($order->total_price + $order->delivery_price) }}" readonly>
+                            value="Rp. {{ number_format($order->total_price) }}" readonly>
                     </div>
                     @endif
 
