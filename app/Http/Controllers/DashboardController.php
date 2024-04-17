@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\MonthlySales;
 use App\Models\LogMoney;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\User;
 use Carbon\Carbon;
+use Flowframe\Trend\Trend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,10 +36,18 @@ class DashboardController extends Controller
 
     public function seller()
     {
+        $chart = new MonthlySales;
+        $trend = Trend::model(Order::class)
+            ->between(now()->startOfMonth(), now()->endOfMonth())
+            ->perDay()
+            ->count();
+        $chart->labels($trend->pluck('date'));
+        $chart->dataset('Produk Terjual', 'line', $trend->pluck('aggregate'));
+
         $totalMoney = LogMoney::where('user_id', Auth::id())->sum('money');
         $totalThisMonth = LogMoney::where('user_id', Auth::id())->where('money', '>=', 0)->whereMonth('created_at', Carbon::now()->month)->sum('money');
         $sellProduct = OrderDetail::where('user_id', Auth::id())->where('delivery_status', 'success')->sum('product_qty');
-        return view('seller.dashboard.index', compact('totalMoney', 'totalThisMonth', 'sellProduct'));
+        return view('seller.dashboard.index', compact('totalMoney', 'totalThisMonth', 'sellProduct', 'chart'));
     }
 
     public function customer()
