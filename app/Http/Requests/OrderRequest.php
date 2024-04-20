@@ -40,7 +40,7 @@ class OrderRequest extends FormRequest
                 'user_id' => 'required',
                 'total_price' => 'required',
                 'payment_method_id' => 'required',
-                'payment_proof' => 'nullable|image',
+                'payment_proof' => 'nullable|image|max:1024',
             ];
         }
 
@@ -56,7 +56,7 @@ class OrderRequest extends FormRequest
             'user_id' => 'required',
             'total_price' => 'required',
             'payment_method_id' => 'required',
-            'payment_proof' => 'required|image',
+            'payment_proof' => 'required|image|max:1024',
         ];
     }
 }

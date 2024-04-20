@@ -25,7 +25,7 @@ class ProductRequest extends FormRequest
             return [
                 'user_id' => 'required',
                 'category_id' => 'required',
-                'image' => 'required|image',
+                'image' => 'required|image|max:1024',
                 'name' => 'required|max:255',
                 'price' => 'required|numeric',
                 'unit' => 'required',
@@ -36,7 +36,7 @@ class ProductRequest extends FormRequest
             return [
                 'user_id' => 'required',
                 'category_id' => 'required',
-                'image' => 'nullable|image',
+                'image' => 'nullable|image|max:1024',
                 'name' => 'required|max:255',
                 'price' => 'required|numeric',
                 'unit' => 'required',
